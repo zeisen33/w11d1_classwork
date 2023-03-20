@@ -59,19 +59,38 @@ const Form = () => {
         if (user.name === '') {
             currentErrors.push('Name cannot be blank!')
         }
+        if (user.email === '') {
+            currentErrors.push('Email cannot be blank!')
+        }
+        if (!user.email.includes('@')) {
+            currentErrors.push('Email improperly formatted!')
+        }
+        if (!user.email.includes('.')) {
+            currentErrors.push('Email improperly formatted!')
+        }
+
+        const phoneSplits = user.phone.split('-')
+
+        if ((phoneSplits[0].length !== 3 || 
+            phoneSplits[1].length !== 3 ||
+            phoneSplits[2].length !== 4) && 
+            (user.phone.length !== 0)) {
+                currentErrors.push('Phone number must be formatted in xxx-xxx-xxxx format!')
+        }
+
         return currentErrors
     }
 
-    // const errorsMap = 
-    //     errors.map(error => {
-    //         console.log(error);
-    //         return <li>{error}</li>
-    //     });
+    const errorsMap = 
+        errors.map(error => {
+            console.log(error);
+            return <li>{error}</li>
+        });
 
     return (
         <div className='formContainer'>
             <ul>
-                {/* {errorsMap} */}
+                {errorsMap}
             </ul>
             <form onSubmit={handleSubmit} >
                 <label>
