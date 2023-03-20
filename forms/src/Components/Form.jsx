@@ -31,7 +31,8 @@ const Form = () => {
 
         return (e) => {
             const val = e.target.value
-            e.preventDefault()
+            // debugger
+            // e.preventDefault()  // With this, needs two clicks to display change. wonky
             // setName(e.target.value);
             setUser({
                 ...user,
@@ -40,9 +41,14 @@ const Form = () => {
         }
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(user)
+    }
+
     return (
         <div className='formContainer'>
-            <form>
+            <form onSubmit={handleSubmit} >
                 <label>
                     Name
                     <input type='text' value={user.name} onChange={handleChange('name')}/>
@@ -74,17 +80,19 @@ const Form = () => {
                 </label>
                 <label>
                     Bio
-                    <textarea value={bio} onChange={handleChange('bio')}>
-                        {bio}
-                    </textarea>
+                    <textarea value={user.bio} onChange={handleChange('bio')} />
                 </label>
                 <label>    
                     Sign up for email notifications
-                    <input type='checkbox' onChange={(e) => {
-                        e.preventDefault();
+                    <input type="checkbox" value={!user.notifications} onChange={handleChange('notifications')} />
+
+
+                    {/* <input type='checkbox' onChange={(e) => {
+                        // e.preventDefault();
                         user.notifications=(!user.notifications)
-                    }} />
+                    }} /> */}
                 </label>
+                <input type='submit' value='Submit' />
             </form>
         </div>
     )
