@@ -8,7 +8,15 @@ const Form = () => {
     const [role, setRole] = useState();
     const [bio, setBio] = useState('');
     const [notifications, setNotifications] = useState(false);
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState({
+        name,
+        email,
+        phone,
+        phoneType,
+        role,
+        bio,
+        notifications
+    })
 
     const handleChange = (field) => {
         // const userInfo = {
@@ -24,6 +32,7 @@ const Form = () => {
         return (e) => {
             const val = e.target.value
             e.preventDefault()
+            // setName(e.target.value);
             setUser({
                 ...user,
                 [field]: val
@@ -36,19 +45,19 @@ const Form = () => {
             <form>
                 <label>
                     Name
-                    <input type='text' value={name} onChange={handleChange('name')}/>
+                    <input type='text' value={user.name} onChange={handleChange('name')}/>
                 </label>
                 <label>
                     Email
-                    <input type='email' value={email}/>
+                    <input type='email' value={user.email} onChange={handleChange('email')}/>
                 </label>
                 <label>
                     Phone Number
-                    <input type='tel' value={phone}/>
+                    <input type='tel' value={user.phone} onChange={handleChange('phone')}/>
                 </label>
                 <label>
                     Phone Type
-                    <select>
+                    <select onChange={handleChange('phoneType')}>
                         <option disabled selected>--Please Select One--</option>
                         <option value='home'>Home</option>
                         <option value='work'>Work</option>
@@ -57,21 +66,24 @@ const Form = () => {
                 </label>
                 <label>
                     Instructor
-                    <input type='radio' name='role' value='instructor' />
+                    <input type='radio' name='role' value='instructor' onChange={handleChange('role')} />
                 </label>
                 <label>
                     Student
-                    <input type='radio' name='role' value='student' />
+                    <input type='radio' name='role' value='student' onChange={handleChange('role')} />
                 </label>
                 <label>
                     Bio
-                    <textarea>
+                    <textarea value={bio} onChange={handleChange('bio')}>
                         {bio}
                     </textarea>
                 </label>
                 <label>    
                     Sign up for email notifications
-                    <input type='checkbox' value='true'/>
+                    <input type='checkbox' onChange={(e) => {
+                        e.preventDefault();
+                        user.notifications=(!user.notifications)
+                    }} />
                 </label>
             </form>
         </div>
