@@ -4,37 +4,55 @@ const Form = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
-    const [phoneType, setPhoneType] = useState();
+    const [phoneType, setPhoneType] = useState('');
     const [role, setRole] = useState();
     const [bio, setBio] = useState('');
-    const [notifications, setNotifications] = useState();
+    const [notifications, setNotifications] = useState(false);
+    const [user, setUser] = useState({})
 
+    const handleChange = (field) => {
+        // const userInfo = {
+        //     name,
+        //     email,
+        //     phone,
+        //     phoneType,
+        //     role,
+        //     bio,
+        //     notifications
+        // }
+
+        return (e) => {
+            const val = e.target.value
+            e.preventDefault()
+            setUser({
+                ...user,
+                [field]: val
+            })
+        }
+    }
 
     return (
         <div className='formContainer'>
             <form>
                 <label>
                     Name
-                    <input type='text' />
+                    <input type='text' value={name} onChange={handleChange('name')}/>
                 </label>
                 <label>
                     Email
-                    <input type='email'>
-                        
-                    </input>
+                    <input type='email' value={email}/>
                 </label>
                 <label>
                     Phone Number
-                    <input type='tel'>
-                        
-                    </input>
+                    <input type='tel' value={phone}/>
                 </label>
                 <label>
                     Phone Type
                     <select>
-                        <option>Home</option>
-                        <option>Work</option>
-                        <option>Mobile</option>
+                        <option disabled selected>--Please Select One--</option>
+                        <option value='home'>Home</option>
+                        <option value='work'>Work</option>
+                        <option value='mobile'>Mobile</option>
                     </select>
                 </label>
                 <label>
@@ -48,12 +66,12 @@ const Form = () => {
                 <label>
                     Bio
                     <textarea>
-                        
+                        {bio}
                     </textarea>
                 </label>
                 <label>    
                     Sign up for email notifications
-                    <input type='checkbox' />
+                    <input type='checkbox' value='true'/>
                 </label>
             </form>
         </div>
