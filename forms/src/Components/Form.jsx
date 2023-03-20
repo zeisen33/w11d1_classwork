@@ -7,7 +7,8 @@ const Form = () => {
     const [phoneType, setPhoneType] = useState('');
     const [role, setRole] = useState();
     const [bio, setBio] = useState('');
-    const [notifications, setNotifications] = useState(false);
+    const [notifications, setNotifications] = useState("false");
+    const [errors, setErrors] = useState([]);
     const [user, setUser] = useState({
         name,
         email,
@@ -42,12 +43,31 @@ const Form = () => {
     }
 
     const handleSubmit = (e) => {
+        const newErrors = errors;
         e.preventDefault();
-        console.log(user)
+        if (user.name === '') {
+            newErrors.push('Name cannot be blank!')
+        }
+        setErrors(newErrors);
+        if (errors.length === 0) {
+            console.log(user);
+        } else {
+            setErrors([]);
+        }
     }
+
+    const errorsMap = () => {
+        errors.map(error => {
+            console.log(error);
+            return <li>{error}</li>
+        });
+    };
 
     return (
         <div className='formContainer'>
+            <ul>
+                {errorsMap}
+            </ul>
             <form onSubmit={handleSubmit} >
                 <label>
                     Name
@@ -84,7 +104,7 @@ const Form = () => {
                 </label>
                 <label>    
                     Sign up for email notifications
-                    <input type="checkbox" value={!user.notifications} onChange={handleChange('notifications')} />
+                    <input type="checkbox" value={user.notifications === "true" ? false : true} onChange={handleChange('notifications')} />
 
 
                     {/* <input type='checkbox' onChange={(e) => {
