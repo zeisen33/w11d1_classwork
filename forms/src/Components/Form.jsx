@@ -43,30 +43,35 @@ const Form = () => {
     }
 
     const handleSubmit = (e) => {
-        const newErrors = errors;
+        const newErrors = validate();
         e.preventDefault();
-        if (user.name === '') {
-            newErrors.push('Name cannot be blank!')
-        }
-        setErrors(newErrors);
-        if (errors.length === 0) {
+        // console.log(errors)
+        setErrors(newErrors)
+        if (newErrors.length === 0) {
             console.log(user);
         } else {
-            setErrors([]);
+            console.log(newErrors);
         }
     }
 
-    const errorsMap = () => {
-        errors.map(error => {
-            console.log(error);
-            return <li>{error}</li>
-        });
-    };
+    const validate = () => {
+        const currentErrors = [];
+        if (user.name === '') {
+            currentErrors.push('Name cannot be blank!')
+        }
+        return currentErrors
+    }
+
+    // const errorsMap = 
+    //     errors.map(error => {
+    //         console.log(error);
+    //         return <li>{error}</li>
+    //     });
 
     return (
         <div className='formContainer'>
             <ul>
-                {errorsMap}
+                {/* {errorsMap} */}
             </ul>
             <form onSubmit={handleSubmit} >
                 <label>
